@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <title>RestInCluj</title>
+</head>
+
+<body id="bg-grad">
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbar10"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar10">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" id="logo" />
+            </a>
+
+            <ul class="navbar-nav nav-fill w-100">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/restaurant">Places to Eat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a
+                            href="/login"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >SIGN IN</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section id="body-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card bg-dark">
+                    <div th:if="${param.success}">
+                        <div class="alert alert-info">
+                            You've successfully registered to our awesome app!
+                        </div>
+                    </div>
+                    <div class="card-header h2 text-center orange-border">
+                        Register Here
+                    </div>
+                    <form th:action="@{/register/save}" th:object="${user}" method="post">
+                        <form th:action="@{/register/saverole}" th:object="${role}" method="post">
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input
+                                            type="firstName"
+                                            class="form-control"
+                                            id="firstName"
+                                            name="firstName"
+                                            placeholder="Enter First Name"
+                                    />
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input
+                                            type="lastName"
+                                            class="form-control"
+                                            id="lastName"
+                                            name="lastName"
+                                            placeholder="Enter Last Name"
+                                    />
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group ">
+                                    <label for="email">E-mail</label>
+                                    <input type="text"
+                                           class="form-control" id="email"
+                                           name="email"
+                                           placeHolder="E-mail"/>
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input
+                                            type="password"
+                                            class="form-control"
+                                            id="password"
+                                            name = "password"
+                                            placeholder="Enter Password"
+                                    />
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="text-light text-center">
+                                    Already have an account? Log In
+                                    <a href="/login">
+                        <span class="text-warning">
+                          Here
+                        </span>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <button type="submit" class="btn orange-button">
+                                Submit
+                            </button>
+                        </ul>
+                    </form>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

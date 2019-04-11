@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <title>RestInCluj</title>
+</head>
+
+<body id="bg-grad">
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbar10"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar10">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" id="logo"/>
+            </a>
+
+            <ul class="navbar-nav nav-fill w-100">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/restaurant">Places to Eat</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/review">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a
+                            sec:authorize="!isAuthenticated()" href="/login"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >SIGN IN</a>
+                    <a
+                            sec:authorize="isAuthenticated()" href="/logout"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >LOG OUT</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1>Review List</h1>
+    <div class="my-2">
+        <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn orange-button bt-sm my-2">
+            Add Review
+        </a>
+    </div>
+
+    <!--<table class="table table-bordered table-striped">-->
+        <!--<thead class="thead-dark">-->
+        <!--<tr>-->
+            <!--<th>Restaurant Name</th>-->
+            <!--<th>Review</th>-->
+            <!--<th>Date of visit</th>-->
+            <!--<th>Date of review</th>-->
+            <!--<th>Rating</th>-->
+            <!--<th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+
+        <!--<tbody>-->
+        <!--<tr th:each="tempReview: ${reviews}">-->
+            <!--<td>-->
+                <!--<div th:each="name : ${allReviews}">-->
+                    <!--<div th:if="${name.key} == ${tempReview.restaurant_id}" th:style="${'color: white;'}"-->
+                         <!--th:text="${allReviews[name.key]}"></div>-->
+                <!--</div>-->
+            <!--</td>-->
+            <!--<td th:style="${'color: white;'}" th:text="${tempReview.review}"></td>-->
+            <!--<td th:style="${'color: white;'}" th:text="${#dates.format(tempReview.dateOfVisit, 'dd-MMM-yyyy')}"></td>-->
+            <!--<td th:style="${'color: white;'}" th:text="${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></td>-->
+            <!--<td th:style="${'color: white;'}" th:text="${tempReview.rating}"></td>-->
+
+            <!--<td sec:authorize="hasRole('ROLE_ADMIN')">-->
+                <!--<a th:href="@{/review/edit/{id} (id=${tempReview.id})}"-->
+                   <!--class="btn btn-info bt-sm mb-3">-->
+                    <!--Edit-->
+                <!--</a>-->
+
+                <!--<a th:href="@{/review/delete/{id} (id=${tempReview.id})}"-->
+                   <!--class="btn btn-danger bt-sm mb-3">-->
+                    <!--Delete-->
+                <!--</a>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
+
+    <div class="card bg-dark mb-2 border-warning" th:each="tempReview: ${reviews}">
+        <div class="ml-auto px-1 ">
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/edit/{id} (id=${tempReview.id})}">
+                <i class="fas fa-pen px-1 text-muted"></i>
+            </a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/delete/{id} (id=${tempReview.id})}">
+                <i class="fas fa-times-circle px-1 text-muted"></i>
+            </a>
+        </div>
+        <div class="card-header orange-border">
+            <span th:each="name : ${allReviews}">
+                <span th:if="${name.key} == ${tempReview.restaurant_id}" th:text="${allReviews[name.key]}"></span>
+            </span>
+            <span class="text-muted float-right" th:text="'Reviewed ' + ${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></span>
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <p th:text="${tempReview.review}"></p>
+                <footer class="blockquote-footer"    th:text="${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></footer>
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
